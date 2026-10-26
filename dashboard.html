@@ -8,7 +8,7 @@
   :root{
     --canvas:#090d14; --panel:#0f172a; --wash:#0b1120; --wash-2:#16202e;
     --line:#1e293b; --line-hi:#2b3a4f; --line-hot:#334155;
-    --ink:#dfe2ed; --ink-2:#94a3b8; --ink-3:#64748b; --ink-4:#475569;
+    --ink:#e8edf5; --ink-2:#b0bfd1; --ink-3:#91a2b8; --ink-4:#73869f;
     --ok:#10b981; --ok-bg:rgba(16,185,129,.12); --ok-line:rgba(16,185,129,.34);
     --warn:#f59e0b; --warn-ink:#fbbf24; --warn-bg:rgba(245,158,11,.12); --warn-line:rgba(245,158,11,.34);
     --bad:#ef4444; --bad-bg:rgba(239,68,68,.12); --bad-line:rgba(239,68,68,.4);
@@ -362,7 +362,7 @@
               border-radius:4px;padding:12px 14px;color:var(--ink);font:500 12.5px/1.7 var(--mono);
               white-space:pre-wrap}
   .notes-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gutter)}
-  .notes-grid h4{margin:0 0 10px;font:600 15px/1.25 var(--sans);color:var(--ink)}
+  .notes-grid h3{margin:0 0 10px;font:600 15px/1.25 var(--sans);color:var(--ink)}
   .notes-grid ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:13px;line-height:1.6}
   .notes-grid li{margin:4px 0}
   .notes-grid li b{color:var(--ink);font-weight:600}
@@ -542,10 +542,6 @@
   .js-motion .reveal.in.card:hover,.js-motion .reveal.in.kpi:hover,
   .js-motion .reveal.in.stage:hover,.js-motion .reveal.in.exhibit:hover{
         border-color:var(--line-hot)}
-  @supports ((-webkit-background-clip:text) or (background-clip:text)){
-    #command-h,.section-title{background-image:linear-gradient(95deg,#dfe2ed 10%,#10b981 58%,#06b6d4 100%);
-      -webkit-background-clip:text;background-clip:text;color:transparent}
-  }
   .btn{transition:background .12s,border-color .12s}
   .btn.primary{background:linear-gradient(135deg,#10b981,#06b6d4);border-color:#10b981;
         border-radius:0;color:#003824;
@@ -595,10 +591,6 @@
   .hero-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
   .hero-panel{position:relative;overflow:hidden;background:var(--wash);border:1px solid var(--line);
     border-radius:8px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:5px}
-  .hero-panel::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--ink-4)}
-  .hero-panel.bad::before{background:var(--bad)}
-  .hero-panel.ok::before{background:var(--ok)}
-  .hero-panel.warn::before{background:var(--warn)}
   .hero-panel .hl{font:600 11px/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase;
     color:var(--ink-3)}
   .hero-panel .big{font:600 38px/1 var(--sans);letter-spacing:-.04em;color:var(--ink);
@@ -653,6 +645,81 @@
     .takeaway .tag{display:block;margin-bottom:3px}
   }
 </style>
+<style>
+  /* A calm first read; detailed benchmark material remains one click away. */
+  body{background:#0a1019;line-height:1.55}
+  ::selection{background:rgba(6,182,212,.28);color:#fff}
+  :focus-visible{outline:2px solid var(--info);outline-offset:3px}
+  .topbar{background:#0d1521}
+  .topbar-in{min-height:64px;gap:18px}
+  .topbar #chip-node,.topbar #chip-gw,.topbar .vdiv{display:none}
+  .brand .name{font-size:17px;letter-spacing:-.025em}
+  .brand .sub{font-size:15px}
+  .nav{gap:2px}
+  .nav a{padding:9px 12px;border-radius:8px;font-weight:500}
+  .nav a.active{background:var(--wash-2);border-color:var(--line-hi);color:var(--ink)}
+  main{padding:36px 0 64px}
+  .stack{gap:24px;max-width:1600px;margin:auto}
+  .card,.kpi{border-radius:12px}
+  .card{padding:24px}
+  .eyebrow{display:none}
+  #command-h,.section-title{background:none!important;color:var(--ink)!important;
+    font-size:clamp(25px,3vw,36px);letter-spacing:-.03em}
+  .section-sub{font-size:14px;max-width:65ch;line-height:1.6}
+  .hero-contrast{padding:20px;border-radius:14px;background:#101b2a;
+    border-color:#304156}
+  .hero-head{justify-content:flex-end;margin-bottom:10px}
+  .hero-panel{padding:18px;border-radius:10px;gap:8px;background:#0c1421}
+  .hero-panel .big{font-size:clamp(32px,3vw,44px)}
+  .hero-panel .meta{line-height:1.55}
+  .hero-sub{font-size:14px;margin-top:16px}
+  .btn.primary{background:var(--ok);border-color:var(--ok);color:#05251d;
+    border-radius:8px;box-shadow:none;font-weight:700}
+  .btn.primary:hover:not(:disabled){background:#34d399;border-color:#34d399;filter:none}
+  .btn.danger{border-radius:8px;box-shadow:none}
+  #command::before{display:none}
+  .context-details{max-width:1600px;margin:auto;border-bottom:1px solid var(--line)}
+  .context-details>summary{cursor:pointer;padding:9px var(--margin);list-style:none;
+    color:var(--ink-2);font-size:12px;font-weight:600}
+  .context-details>summary::-webkit-details-marker{display:none}
+  .context-details>summary::before{content:"+";display:inline-block;width:18px;color:var(--info)}
+  .context-details[open]>summary::before{content:"−"}
+  .context-details .telemetry,.context-details .stakes{background:#0c1420}
+  .expand-section{border:1px solid var(--line-hi);border-radius:12px;
+    background:var(--panel);overflow:hidden;scroll-margin-top:112px}
+  .expand-section>summary{display:flex;align-items:center;gap:14px;cursor:pointer;
+    list-style:none;padding:18px 22px;color:var(--ink);font-size:16px;font-weight:650}
+  .expand-section>summary::-webkit-details-marker{display:none}
+  .expand-section>summary:hover{background:var(--wash-2)}
+  .expand-section>summary::before{content:"+";display:grid;place-items:center;
+    width:24px;height:24px;flex:0 0 24px;border:1px solid var(--line-hi);
+    border-radius:6px;color:var(--info);font:600 17px/1 var(--sans)}
+  .expand-section[open]>summary::before{content:"−"}
+  .expand-section>summary small{margin-left:auto;color:var(--ink-2);
+    font-size:12px;font-weight:450;text-align:right}
+  .expand-section[open]>summary{border-bottom:1px solid var(--line)}
+  .metrics-details{margin-top:16px}
+  .metrics-details .kpis{padding:20px}
+  .metrics-details .repro{margin:0 20px 20px}
+  .evidence-content{display:flex;flex-direction:column;gap:20px;padding:20px}
+  .evidence-content .card{background:var(--wash)}
+  #notes{padding:20px 24px}
+  @media (max-width:767px){
+    main{padding:22px 0 42px}
+    .topbar-in{gap:9px}
+    .topbar #chip-status{margin-left:auto}
+    .nav{gap:2px}
+    .nav a{padding:9px 10px;white-space:nowrap}
+    .card{padding:18px}
+    .hero-contrast{padding:16px}
+    .hero-panel{padding:16px}
+    .expand-section>summary{align-items:flex-start;padding:16px;font-size:15px}
+    .expand-section>summary small{display:none}
+    .metrics-details .kpis{padding:14px}
+    .metrics-details .repro{margin:0 14px 14px}
+    .evidence-content{padding:14px;gap:14px}
+  }
+</style>
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -674,10 +741,10 @@
     <span class="chip" id="chip-gw">GW p95: <span id="chip-gw-text">--</span></span>
 
     <nav class="nav" aria-label="Sections">
-      <a href="#command" class="active">Executive Command</a>
-      <a href="#replay">Trace Replay &amp; Sim</a>
-      <a href="#exhibits">Empirical Benchmark</a>
-      <a href="#notes">Audit Log</a>
+      <a href="#command" class="active">Overview</a>
+      <a href="#replay">Replay</a>
+      <a href="#evidence-details">Evidence</a>
+      <a href="#notes">Caveats</a>
     </nav>
 
     <span class="cli" title="Start the console">
@@ -696,6 +763,8 @@
   </div>
 </header>
 
+<details class="context-details">
+  <summary>Run context and references</summary>
 <div class="telemetry">
   <div class="telemetry-in" id="telemetry">
     <span class="tk"><span class="k">run</span><span class="v">reading results&hellip;</span></span>
@@ -706,6 +775,7 @@
   <div class="stakes-in"><b>Real stakes:</b> EchoLeak (CVE-2025-32711, zero-click data theft) &middot;
     Salesloft Drift (stolen OAuth tokens, 700+ orgs) &middot; MCPTox (36.5% attack success)</div>
 </div>
+</details>
 
 <main>
   <div class="stack">
@@ -714,11 +784,9 @@
     <section id="command" aria-labelledby="command-h">
       <div class="card-head">
         <div>
-          <div class="eyebrow">Executive Command / measured invariants</div>
-          <h2 id="command-h">What the seed-7 run actually proves</h2>
-          <p class="section-sub">Every figure below is read from
-            <span class="mono">results/results.json</span> when the page loads. Nothing here is
-            typed by hand; a missing run shows an explicit empty state instead of zeros.</p>
+          <h2 id="command-h">What this run shows</h2>
+          <p class="section-sub">Seed-7 simulation. The figures come from measured results;
+            unavailable data is shown as unavailable.</p>
         </div>
         <div class="right">
           <span class="badge" id="run-badge">run: --</span>
@@ -733,6 +801,8 @@
         <p class="hero-sub"><b>Every step below passed IAM.</b>
           Tether stopped the data anyway.</p>
       </div>
+      <details class="expand-section metrics-details">
+        <summary><span>All performance metrics</span><small>utility, detection and latency</small></summary>
       <div class="kpis" id="kpis"></div>
       <div class="repro" id="repro" aria-label="Reproducibility">
         <span class="dot"></span>
@@ -740,6 +810,7 @@
           <span class="digest" id="repro-digest">--</span><span id="repro-tail">; seed 11 &rarr; same.
           Two runs, identical output.</span></span>
       </div>
+      </details>
     </section>
 
     <!-- Live replay -->
@@ -753,9 +824,6 @@
           <span class="badge warn">live output &middot; not a measured aggregate</span>
         </div>
       </div>
-      <p class="live-note"><span class="dot"></span>
-        This pane runs the simulator once, right now. The aggregate claims are E1&ndash;E9 below.</p>
-
       <div class="toolbar">
         <span class="field"><label for="scenario">scenario</label>
           <select id="scenario"></select></span>
@@ -786,6 +854,9 @@
       <div class="hint" id="run-hint">No session loaded. <b>Arrow keys</b> step the timeline.</div>
     </section>
 
+    <details class="expand-section evidence-details" id="evidence-details">
+      <summary><span>Explore the full evidence</span><small>pipeline, attack results and nine exhibits</small></summary>
+      <div class="evidence-content">
     <!-- Gateway pipeline -->
     <section class="card" id="pipeline" aria-labelledby="pipeline-h">
       <div class="card-head">
@@ -1021,6 +1092,8 @@
            style="margin:16px 0;display:flex;flex-wrap:wrap;gap:6px"></nav>
       <div class="exhibit-grid" id="exhibits" aria-live="polite"></div>
     </section>
+      </div>
+    </details>
 
     <!-- Notes / caveats -->
     <section class="card" id="notes" aria-labelledby="notes-h">
@@ -1030,9 +1103,11 @@
           <h2 id="notes-h">Caveats, in the open</h2>
         </div>
       </div>
+      <details class="more caveats-details">
+        <summary>Read the method and limitations</summary>
       <div class="notes-grid">
         <div>
-          <h4>Reading this console</h4>
+          <h3>Reading this console</h3>
           <ul>
             <li><b>E1&ndash;E9</b> are generated SVG exhibits; the page computes no aggregate.</li>
             <li><b>Colour</b>: green = nominal, amber = armed/degraded, red = hard rung,
@@ -1044,10 +1119,11 @@
           </ul>
         </div>
         <div>
-          <h4>Declared caveats from the run</h4>
+          <h3>Declared caveats from the run</h3>
           <ul id="caveats"></ul>
         </div>
       </div>
+      </details>
     </section>
 
   </div>
@@ -2652,6 +2728,8 @@ function renderNav(exhibits) {
 }
 
 function focusExhibit(name) {
+  const evidence = $("evidence-details");
+  if (evidence) evidence.open = true;
   document.querySelectorAll(".exhibit").forEach((node) => {
     node.classList.toggle("is-target", node.dataset.name === name);
   });
@@ -3055,6 +3133,9 @@ function wireLedger() {
 }
 
 async function init() {
+  const hashTarget = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+  const evidence = $("evidence-details");
+  if (hashTarget && evidence && evidence.contains(hashTarget)) evidence.open = true;
   wireChrome();
   wireReplay();
   wireLedger();
